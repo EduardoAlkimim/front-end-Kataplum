@@ -19,6 +19,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+
+        // 👇 ADICIONE ESTAS DUAS VARIANTES AQUI 👇
+
+        // Laranja Pastel (Fundo claro, texto escuro, hover escurece)
+        kataplum:
+          "bg-orange-100 text-orange-700 hover:bg-orange-200 border-0 font-bold",
+        
+        // Rosa Pastel (Fundo claro, texto escuro, hover escurece)
+        kataplumOutline:
+          "bg-pink-50 text-pink-600 hover:bg-pink-100 border-2 border-pink-100 hover:border-pink-200 font-bold",
+
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -57,4 +68,4 @@ function Button({
   )
 }
 
-export { Button, buttonVariants }
+export { Button }

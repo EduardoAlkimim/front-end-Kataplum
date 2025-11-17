@@ -1,16 +1,19 @@
+// Arquivo: CartContext.tsx (O CÓDIGO CORRETO)
+
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
-
+// 1. Interface do Item com 'descricao' e SEM 'price'
 export interface CartItem {
   id: number;
   name: string;
-  price: number;
+  descricao: string; // 
   image: string;
   category: string;
   quantity: number;
 }
 
+// 2. Interface do Contexto SEM 'totalPrice'
 interface CartContextType {
   items: CartItem[];
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
@@ -18,13 +21,14 @@ interface CartContextType {
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
-  totalPrice: number;
+
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
     setItems((prevItems) => {
@@ -59,7 +63,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // totalPrice foi removido daqui
 
   return (
     <CartContext.Provider
@@ -70,7 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         updateQuantity,
         clearCart,
         totalItems,
-        totalPrice,
+        // totalPrice foi removido daqui
       }}
     >
       {children}
@@ -78,6 +82,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
