@@ -1,3 +1,7 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AllProducts } from './components/AllProducts'; 
+
+// Suas importações existentes
 import { Header } from './components/Header';
 import { HeroCarousel } from './components/HeroCarousel';
 import { FeaturedCategories } from './components/FeaturedCategories';
@@ -8,24 +12,52 @@ import { InstagramFeed } from './components/InstagramFeed';
 import { Footer } from './components/Footer';
 import { CartProvider } from './components/CartContext';
 import { Toaster } from './components/ui/sonner';
+
 import './index.css';
 
 export default function App() {
   return (
     <CartProvider>
-      <div className="min-h-screen">
-        <Header />
-        <main>
-          <HeroCarousel />
-          <FeaturedCategories />
-          <HowItWorks />
-          <ProductList />
-          <AboutSection />
-          <InstagramFeed />
-        </main>
-        <Footer />
-        <Toaster position="bottom-right" />
-      </div>
+      {/*
+        ======================================================
+        🚀 A MUDANÇA É AQUI: Adicione a prop 'basename' 🚀
+        ======================================================
+      */}
+      <BrowserRouter basename="/front-end-Kataplum">
+        <div className="min-h-screen">
+          <Header />
+          <main>
+            <Routes>
+              
+              {/* Esta rota 'path="/"' agora vai corresponder
+                  à URL '/front-end-Kataplum/' */}
+              <Route 
+                path="/" 
+                element={
+                  <>
+                    <HeroCarousel />
+                    <FeaturedCategories />
+                    <HowItWorks />
+                    <ProductList /> 
+                    <AboutSection />
+                    <InstagramFeed />
+                  </>
+                } 
+              />
+
+              {/* Esta rota 'path="/produtos"' agora vai corresponder
+                  à URL '/front-end-Kataplum/produtos' */}
+              <Route 
+                path="/produtos" 
+                element={<AllProducts />} 
+              />
+
+            </Routes>
+          </main>
+          <Footer />
+          <Toaster position="bottom-right" />
+        </div>
+      </BrowserRouter>
     </CartProvider>
   );
 }

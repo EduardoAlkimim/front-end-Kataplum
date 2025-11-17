@@ -2,84 +2,81 @@ import { Search, Calendar, Truck } from 'lucide-react';
 
 const steps = [
   {
-    id: 1,
+    id: '01',
     title: 'Busque e Selecione',
-    description: 'Explore nosso extensivo catálogo e esdcolha seu tema de festa e equipamento preferidos.',
+    description: 'Explore nosso catálogo e escolha seu tema de festa preferido.',
     icon: Search,
-    color: 'blue',
+    hoverColor: 'group-hover:text-blue-600', // Azul (Busca)
   },
   {
-    id: 2,
+    id: '02',
     title: 'Agende sua data',
-    description: 'Reserve seus itens para a data do evento de forma simples e online',
+    description: 'Reserve seus itens para a data do evento de forma simples.',
     icon: Calendar,
-    color: 'yellow',
+    hoverColor: 'group-hover:text-orange-500', // Laranja (Tempo)
   },
   {
-    id: 3,
-    title: 'Entregamos e Preparamos',
-    description: 'Entrgamos e preparamos tudo, apenas foque em se divertir e aproveite a celebração.',
+    id: '03',
+    title: 'Entregamos tudo',
+    description: 'Nós entregamos e retiramos. Foque apenas em se divertir.',
     icon: Truck,
-    color: 'green',
+    hoverColor: 'group-hover:text-green-600', // Verde (Entrega)
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="py-16 md:py-24 bg-muted/30" id="services">
+    <section className="py-24 bg-white border-b border-gray-100" id="services">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="mb-4 text-3xl md:text-4xl" style={{ fontWeight: 'var(--font-weight-medium)' }}>
-            Como funciona
+        
+        <div className="text-center mb-16">
+          {/* 👇 TÍTULO ESTILIZADO AQUI 👇 */}
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">
+            Como <span className="text-orange-500">Funciona</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            3 simples passos para a festa perfeita
+          <p className="text-gray-500 max-w-2xl mx-auto">
+            Sem complicação. Tudo pronto em 3 passos.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
-          {steps.map((step, index) => {
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {steps.map((step) => {
             const Icon = step.icon;
-            const isLast = index === steps.length - 1;
             
             return (
-              <div key={step.id} className="relative">
-                <div className="flex flex-col items-center text-center">
-                  {/* Icon Circle */}
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 rounded-full bg-white border-4 border-[--brand-pink] flex items-center justify-center shadow-lg">
-                      <Icon className="w-10 h-10 text-[--brand-pink]" />
-                    </div>
-                    {/* Step Number */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[--brand-orange] text-white flex items-center justify-center shadow-md" style={{ fontWeight: 'var(--font-weight-medium)' }}>
-                      {step.id}
-                    </div>
+              <div 
+                key={step.id} 
+                className="
+                  group relative p-8 rounded-2xl 
+                  border border-gray-100 bg-white 
+                  hover:border-gray-200 hover:shadow-lg 
+                  transition-all duration-300 cursor-default
+                "
+              >
+                {/* Número no fundo (visível) */}
+                <div className="absolute top-4 right-6 text-6xl font-bold text-gray-300 select-none transition-colors">
+                  {step.id}
+                </div>
+
+                <div className="relative z-10 flex flex-col items-start">
+                  {/* Ícone (Cinza -> Cor no Hover) */}
+                  <div className={`mb-6 p-3 rounded-xl bg-gray-50 border border-gray-100 text-gray-400 ${step.hoverColor} transition-colors duration-300`}>
+                    <Icon className="w-8 h-8" />
                   </div>
 
-                  {/* Content */}
-                  <h3 className="mb-3 text-xl" style={{ fontWeight: 'var(--font-weight-medium)' }}>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-muted-foreground">
+                  
+                  <p className="text-gray-500 text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>
-
-                {/* Connector Line (Desktop Only) */}
-                {!isLast && (
-                  <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-[--brand-pink] to-transparent" />
-                )}
               </div>
             );
           })}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <button className="px-8 py-3 bg-gradient-to-r from-[--brand-blue] to-[--brand-green] hover:opacity-90 text-white rounded-lg transition-colors">
-            Get Started Now
-          </button>
-        </div>
       </div>
     </section>
   );

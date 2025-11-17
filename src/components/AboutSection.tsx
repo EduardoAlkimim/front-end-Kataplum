@@ -1,80 +1,84 @@
 import { Award, Users, Calendar, Heart } from 'lucide-react';
 
+// Dados organizados com classes de cor diretas (pastel)
 const stats = [
   {
     id: 1,
     value: '5000+',
     label: 'Clientes Felizes',
     icon: Users,
-    color: 'blue',
+    iconColor: 'text-sky-600',
+    bgColor: 'bg-sky-100',
   },
   {
     id: 2,
     value: '1000+',
-    label: 'Eventos',
+    label: 'Eventos Realizados',
     icon: Calendar,
-    color: 'orange',
+    iconColor: 'text-orange-600',
+    bgColor: 'bg-orange-100',
   },
   {
     id: 3,
     value: '8+',
     label: 'Anos de Experiência',
     icon: Award,
-    color: 'yellow',
+    iconColor: 'text-yellow-600',
+    bgColor: 'bg-yellow-100',
   },
   {
     id: 4,
     value: '100%',
-    label: 'Cliente Satisfeitos',
+    label: 'Satisfação',
     icon: Heart,
-    color: 'red',
+    iconColor: 'text-pink-600',
+    bgColor: 'bg-pink-100',
   },
 ];
 
 export function AboutSection() {
   return (
-    <section className="py-16 md:py-24 bg-background" id="about">
+    <section className="py-20 bg-white overflow-hidden" id="about">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
+        {/* 👇 CORREÇÃO DE ALINHAMENTO: Adicionado 'lg:items-center' 👇 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:items-center">
+          
+          {/* --- LADO ESQUERDO: TEXTO E STATS --- */}
           <div>
-            <h2 className="mb-6 text-3xl md:text-4xl" style={{ fontWeight: 'var(--font-weight-medium)' }}>
-             Kataplum - Celebrações Inesquecíveis
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-sm font-medium mb-6">
+              Sobre Nós
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+              Kataplum: Criando <span className="text-orange-500">Celebrações Inesquecíveis</span>
             </h2>
-            <div className="space-y-4 text-muted-foreground">
+            
+            <div className="space-y-6 text-lg text-gray-500 leading-relaxed">
               <p>
-                Na Kataplum, acreditamos que toda festa merece ser extraordinária. Desde 2017, ajudamos famílias e empresas a criar momentos mágicos com nossos equipamentos premium para festas e decorações temáticas. 
-                Temos tudo que você precisa para dar vida à sua visão de festa.
+                Na Kataplum, acreditamos que toda festa merece ser extraordinária. 
+                Desde 2017, ajudamos famílias e empresas a transformar sonhos em realidade 
+                com nossos equipamentos premium e decorações temáticas exclusivas.
               </p>
               <p>
-                Desde celebrações encantadoras com o tema Disney até festas cheias de ação de super-heróis e reminiscências dos anos 80,
-                temos tudo que você precisa para dar vida à sua visão de festa. Nosso extenso catálogo oferece aluguéis de alta qualidade, 
-                serviços de configuração profissional e suporte dedicado ao cliente.
-              </p>
-              <p>
-                O que nos diferencia é o nosso compromisso em tornar o planejamento da festa livre de estresse. Cuidamos da entrega, 
-                configuração e coleta, para que você possa se concentrar no que é mais importante: 
-                comemorar com seus entes queridos.
+                Nosso diferencial é tirar o estresse do seu ombro. Cuidamos de toda a logística, 
+                entrega e montagem, para que sua única preocupação seja aproveitar o momento 
+                com quem você ama.
               </p>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-6 mt-8">
+            {/* Grid de Estatísticas (Redesenhado) */}
+            <div className="grid grid-cols-2 gap-6 mt-10">
               {stats.map((stat) => {
                 const Icon = stat.icon;
-                const colorMap: Record<string, string> = {
-                  blue: 'text-[--brand-blue]',
-                  orange: 'text-[--brand-orange]',
-                  pink: 'text-[--brand-pink]',
-                  green: 'text-[--brand-green]',
-                };
                 return (
-                  <div key={stat.id} className="text-center">
-                    <Icon className={`w-8 h-8 mx-auto mb-2 ${colorMap[stat.color]}`} />
-                    <div className="text-2xl md:text-3xl mb-1" style={{ fontWeight: 'var(--font-weight-medium)' }}>
+                  <div key={stat.id} className="flex flex-col items-start p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors duration-300">
+                    <div className={`p-3 rounded-lg ${stat.bgColor} mb-3`}>
+                      <Icon className={`w-6 h-6 ${stat.iconColor}`} />
+                    </div>
+                    <div className="text-3xl font-bold text-gray-900">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-gray-500 font-medium">
                       {stat.label}
                     </div>
                   </div>
@@ -83,22 +87,22 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Image */}
+          {/* --- LADO DIREITO: IMAGEM --- */}
           <div className="relative">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-              {/* // Imagem aqui
-              
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1687186511607-68b95444ea33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJ0eSUyMGNlbGVicmF0aW9uJTIwYmFsbG9vbnN8ZW58MXx8fHwxNzYxNjE1OTUyfDA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Party celebration with colorful decorations"
-                className="w-full h-full object-cover"
-              />*/}
-              
+            {/* Elementos Decorativos */}
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30" />
+            <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30" />
+            
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+              <img 
+                src="https://res.cloudinary.com/dsry3r1jc/image/upload/v1763390062/kataplum__502576047_18329564113201149_7632379807681038713_n_1_gmjw8o.jpg" 
+                onError={(e) => e.currentTarget.src = 'https://placehold.co/600x800/f97316/white?text=Kataplum'}
+                alt="Crianças se divertindo em uma festa Kataplum com piscina de bolinhas" 
+                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+              />
             </div>
-            {/* Decorative elements */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[--brand-orange] rounded-full opacity-20 blur-3xl" />
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-[--brand-pink] rounded-full opacity-20 blur-3xl" />
           </div>
+
         </div>
       </div>
     </section>
