@@ -5,7 +5,7 @@ import { defineConfig } from "vite"   // ← FALTAVA ISSO
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "'/front-end-Kataplum/", // OBRIGATÓRIO NA VERCEL
+  base: "/front-end-Kataplum/", // OBRIGATÓRIO NA VERCEL
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
