@@ -23,7 +23,7 @@ export default function App() {
         🚀 A MUDANÇA É AQUI: Adicione a prop 'basename' 🚀
         ======================================================
       */}
-      <BrowserRouter>
+      <BrowserRouter basename="/front-end-Kataplum">
         <div className="min-h-screen">
           <Header />
           <main>

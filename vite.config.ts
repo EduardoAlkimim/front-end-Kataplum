@@ -5,15 +5,13 @@ import { defineConfig } from "vite"   // ← FALTAVA ISSO
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/", // na Vercel sempre é "/"
-  
+  base: "'/front-end-Kataplum/", // OBRIGATÓRIO NA VERCEL
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-
   build: {
     outDir: "dist",
   },
-})
+});
