@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom'; // 👈 Importante para a navegação
 import { Cart } from './Cart';
 import logoImage from '../assets/logo-Kataplum.png';
 
@@ -41,32 +42,38 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bgImg backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Removi 'justify-between' daqui e vamos controlar nos filhos */}
         <div className="flex items-center h-16 md:h-20">
-          
-          {/* 1. BLOCO ESQUERDA (Cresce para ocupar espaço) */}
+
+          {/* 1. BLOCO ESQUERDA */}
           <div className="flex-1 flex justify-start">
             <HashLink to="/#home" className="transition-transform hover:scale-105">
               <img src={logoImage} alt="Kataplum Logo" className="h-12 md:h-16 w-auto" />
             </HashLink>
           </div>
 
-          {/* 2. BLOCO CENTRO (Tamanho fixo do conteúdo) */}
-          {/* Navbar centralizada absolutamente pelo equilibrio dos lados */}
+          {/* 2. BLOCO CENTRO */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <NavLink key={item.name} {...item} />
             ))}
           </nav>
 
-          {/* 3. BLOCO DIREITA (Cresce igual a esquerda, jogando o cart pro final) */}
+          {/* 3. BLOCO DIREITA */}
           <div className="flex-1 flex justify-end items-center gap-3">
-            {/* Desktop Cart */}
-            <div className="hidden md:block">
-               <Cart />
-            </div>
 
-            {/* Mobile Controls (Só aparecem no mobile) */}
+            <div className="hidden md:block">
+              <Cart />
+            </div>
+            
+            {/* 🚀 BOTÃO TRANSFORMADO EM LINK */}
+            <Link 
+              to="/montar-festa"
+              className="bg-gradient-to-r from-[--brand-pink] to-[--brand-blue] text-white px-4 py-2 rounded-lg font-semibold transition-opacity hover:opacity-90 whitespace-nowrap"
+            >
+              Monte sua Festa
+            </Link>
+
+            {/* Mobile Controls */}
             <div className="md:hidden flex items-center gap-2">
               <Cart />
               <button
