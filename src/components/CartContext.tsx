@@ -63,7 +63,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  // totalPrice foi removido daqui
 
   return (
     <CartContext.Provider

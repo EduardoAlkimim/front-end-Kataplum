@@ -209,7 +209,7 @@ export function ProductList() {
             className="
               inline-flex items-center justify-center gap-2
               h-14 px-10 rounded-full 
-              bg-white text-gray-900 font-bold
+              bgWhite text-gray-900 font-bold
               border-2 border-gray-200
             "
           >

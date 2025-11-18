@@ -26,7 +26,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="py-24 bg-white border-b border-gray-100" id="services">
+    <section className="py-24 bgImgNuvem border-b border-gray-100" id="services">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
