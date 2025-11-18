@@ -46,7 +46,7 @@ export function Cart() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-lg overflow-y-auto bg-white/90 backdrop-blur-lg">
         <SheetHeader>
           <SheetTitle className="text-2xl font-bold">Meu Orçamento</SheetTitle>
           <SheetDescription>

@@ -76,15 +76,13 @@ export function InstagramFeed() {
       setIsLoading(false);
       return;
     }
-    // ... (Sua lógica de cache) ...
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white border-t border-gray-100" id="instagram">
+    <section className="py-16 md:py-24 bgImg border-t border-gray-100" id="instagram">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
           <div>
-            {/* 👇 ERRO CORRIGIDO: <h2> fechado corretamente 👇 */}
             <h2 className="mb-4 text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
               Siga nossas <span className="text-[#E91E63]">Histórias</span>
             </h2>
@@ -93,8 +91,6 @@ export function InstagramFeed() {
             </p>
           </div>
           <div className="flex items-center gap-4 mt-6 md:mt-0">
-            {/* 👇 BOTÃO DE ATUALIZAR REMOVIDO 👇 */}
-            
             <Button
               asChild
               variant="kataplumOutline" // Usando a variante Rosa Pastel
@@ -102,7 +98,7 @@ export function InstagramFeed() {
               className="rounded-full"
             >
               <a
-                href="https://instagram.com/kataplum_" 
+                href="https://instagram.com/kataplum_"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -121,8 +117,6 @@ export function InstagramFeed() {
           </div>
         )}
 
-        {/* Removi o "lastFetch" para um visual mais limpo */}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {posts.map((post) => (
             <a
@@ -132,17 +126,29 @@ export function InstagramFeed() {
               rel="noopener noreferrer"
               className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 cursor-pointer"
             >
-              <img
-                src={post.image || 'https://placehold.co/500x500?text=Sem+Imagem'}
-                alt={post.caption} // Legenda ainda usada para acessibilidade
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              {/* 👇 CAMADA DE LEGENDA REMOVIDA 👇 */}
-              {/* <div className="absolute inset-0 bg-gradient-to-t ...">
-                  ... (código da legenda removido) ...
-                </div> 
-              */}
-              
+              <div
+                className="
+    group bg-white rounded-[20px] overflow-hidden
+    flex items-center justify-center
+    border border-pink-200
+    hover:border-pink-500
+    hover:shadow-[0_0_35px_12px_rgba(255,0,150,0.7)]
+    transition-all duration-300 ease-out h-full w-full
+   "
+              >
+                <img
+                  src={post.image || 'https://placehold.co/500x500?text=Sem+Imagem'}
+                  alt={post.caption}
+                  className="
+      w-full h-full object-cover
+      transition-transform duration-300 
+      group-hover:scale-105
+    "
+                />
+              </div>
+
+
+
               {/* Ícone sutil no canto para indicar link externo */}
               <div className="absolute top-3 right-3 p-2 rounded-full bg-white/70 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <ExternalLink className="w-4 h-4 text-gray-800" />

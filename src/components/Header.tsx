@@ -39,7 +39,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-border">
+    <header className="sticky top-0 z-50 w-full bgImg backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Removi 'justify-between' daqui e vamos controlar nos filhos */}
         <div className="flex items-center h-16 md:h-20">

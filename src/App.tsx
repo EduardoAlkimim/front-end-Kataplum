@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AllProducts } from './components/AllProducts'; 
-
-// Suas importações existentes
 import { Header } from './components/Header';
 import { HeroCarousel } from './components/HeroCarousel';
 import { FeaturedCategories } from './components/FeaturedCategories';
