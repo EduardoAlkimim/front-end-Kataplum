@@ -9,7 +9,8 @@ import axios from 'axios';
 interface ProductAPI {
   id: number;
   nome: string;
-  imagem_url: string;
+  // imagem_url: string; // Removido
+  galeria: string[] | string; // Novo
   tags: string[] | string;
   descricao?: string;
   preco?: number;
@@ -18,7 +19,8 @@ interface ProductAPI {
 interface Product {
   id: number;
   nome: string;
-  imagem_url: string;
+  // imagem_url: string; // Removido
+  galeria: string[]; // Novo
   tags: string[];
   category: string;
   descricao: string;
@@ -45,10 +47,24 @@ export function ProductList() {
           else if (typeof p.tags === 'string')
             tagsArray = p.tags.split(',').map((t) => t.trim());
 
+          let galeriaArray: string[] = [];
+          if (p.galeria) {
+            if (typeof p.galeria === 'string') {
+              try {
+                const parsed = JSON.parse(p.galeria);
+                if (Array.isArray(parsed)) galeriaArray = parsed;
+              } catch (e) {
+                galeriaArray = [p.galeria];
+              }
+            } else if (Array.isArray(p.galeria)) {
+              galeriaArray = p.galeria;
+            }
+          }
+
           return {
             id: p.id,
             nome: p.nome,
-            imagem_url: p.imagem_url,
+            galeria: galeriaArray,
             tags: tagsArray,
             category: tagsArray.length > 0 ? tagsArray[0] : 'Geral',
             descricao: p.descricao || 'Este item não possui descrição.',
@@ -82,7 +98,7 @@ export function ProductList() {
       id: product.id,
       name: product.nome,
       descricao: product.descricao,
-      image: product.imagem_url,
+      image: product.galeria[0] || '',
       category: product.category,
     });
     toast.success(`${product.nome} adicionado ao orçamento!`);
@@ -91,7 +107,8 @@ export function ProductList() {
   return (
     <section className="py-20 bg-white" id="products">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        
+
+
         {/* Cabeçalho */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center p-3 bg-orange-50 rounded-full mb-6 ring-1 ring-orange-100">
@@ -117,20 +134,23 @@ export function ProductList() {
               <div
                 key={product.id}
                 className="
-                  group bg-white rounded-[20px] overflow-hidden 
-                  border border-gray-100 
-                  hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/10
-                  transition-all duration-300 ease-out flex flex-col relative
-                "
+group bg-white rounded-[20px] overflow-hidden 
+border border-gray-100 
+hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/10
+transition-all duration-300 ease-out flex flex-col relative
+"
               >
                 {/* Imagem */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
-                  <img
-                    src={product.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}
-                    alt={product.nome}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  
+                  <Link to={`/produto/${product.id}`}>
+                    <img
+                      src={product.galeria[0] || 'https://placehold.co/600x400?text=Sem+Imagem'}
+                      alt={product.nome}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </Link>
+
+
                   {/* Badge Popular (Rosa para contraste com o Laranja) */}
                   <div className="absolute top-4 left-4">
                     <Badge className="bg-[#E91E63] hover:bg-[#D81B60] text-white border-0 shadow-lg px-3 py-1 text-xs font-bold tracking-wide uppercase">
@@ -155,9 +175,11 @@ export function ProductList() {
                       {product.category}
                     </span>
                   </div>
-                  
+
                   <h3 className="mb-3 text-xl font-bold text-gray-900 line-clamp-1 group-hover:text-[#F59E0B] transition-colors">
-                    {product.nome}
+                    <Link to={`/produto/${product.id}`} className="hover:text-[#F59E0B] transition-colors">
+                      {product.nome}
+                    </Link>
                   </h3>
 
                   <div className="mb-6 flex-1">
@@ -167,25 +189,20 @@ export function ProductList() {
                   </div>
 
                   <div className="mt-auto pt-5 border-t border-gray-50">
-                    
-                    {/* 🔥 BOTÃO SUPIMPA (AÇÃO PRIMÁRIA) 
-                      Cor: #F59E0B (Laranja da Marca) SÓLIDO.
-                      Texto: Branco.
-                      Efeito: Sombra colorida suave no hover + leve subida.
-                      Viés Cognitivo: Cor Quente = Ação, Impulso.
-                    */}
+
+                    {/* 🔥 BOTÃO SUPIMPA */}
                     <button
                       onClick={() => handleAddToCart(product)}
                       className="
-                        w-full h-12 rounded-xl 
-                        flex items-center justify-center gap-2 
-                        bg-[#F59E0B] hover:bg-[#ea8f00]
-                        text-white font-bold text-sm tracking-wide
-                        shadow-md shadow-orange-500/20 
-                        hover:shadow-lg hover:shadow-orange-500/30
-                        hover:-translate-y-0.5
-                        transition-all duration-200
-                      "
+w-full h-12 rounded-xl 
+flex items-center justify-center gap-2 
+bg-[#F59E0B] hover:bg-[#ea8f00]
+text-white font-bold text-sm tracking-wide
+shadow-md shadow-orange-500/20 
+hover:shadow-lg hover:shadow-orange-500/30
+hover:-translate-y-0.5
+transition-all duration-200
+"
                     >
                       <ShoppingCart className="w-4 h-4" />
                       ADICIONAR AO ORÇAMENTO
@@ -199,19 +216,14 @@ export function ProductList() {
         )}
 
         <div className="text-center mt-20">
-          {/* 🌬️ BOTÃO VER MAIS (NAVEGAÇÃO SECUNDÁRIA)
-             Cor: Neutra (Preto/Cinza).
-             Estilo: Outline / Vazado.
-             Viés: Não compete com o botão de compra. Diz "Estou aqui se você quiser ver mais, mas compre primeiro".
-          */}
-          <Link 
+          <Link
             to="/produtos"
             className="
-              inline-flex items-center justify-center gap-2
-              h-14 px-10 rounded-full 
-              bgWhite text-gray-900 font-bold
-              border-2 border-gray-200
-            "
+inline-flex items-center justify-center gap-2
+h-14 px-10 rounded-full 
+bgWhite text-gray-900 font-bold
+border-2 border-gray-200
+"
           >
             Explorar Catálogo Completo
             <ArrowRight className="w-5 h-5" />
