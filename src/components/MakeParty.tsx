@@ -11,7 +11,7 @@ import {
   PackageOpen
 } from 'lucide-react';
 
-const API_URL_FULL = 'http://localhost:3001/itens-avulsos';
+const API_URL_FULL = `${import.meta.env.VITE_API_URL}/itens-avulsos`;
 
 const ETAPAS_FESTA = [
   "Pratos","Suportes","Vasos","Arranjos de Flor","Piruliteiras","Bolo (Maquetes)","Cilindros",
