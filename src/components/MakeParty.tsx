@@ -58,6 +58,7 @@ export function MakeParty() {
 
           if (typeof tagsData === 'string' && (tagsData.startsWith('[') || tagsData.startsWith('"['))) {
             try { tagsData = JSON.parse(tagsData); } 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             catch (e) { console.warn("Erro ao parsear tag:", tagsData); }
           }
 
@@ -89,7 +90,7 @@ export function MakeParty() {
     }
 
     fetchItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   const currentCategoryName = ETAPAS_FESTA[currentStepIndex];

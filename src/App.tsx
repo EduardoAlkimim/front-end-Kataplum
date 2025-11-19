@@ -9,8 +9,11 @@ import { AboutSection } from './components/AboutSection';
 import { InstagramFeed } from './components/InstagramFeed';
 import { Footer } from './components/Footer';
 import { CartProvider } from './components/CartContext';
-import { MakeParty } from './components/MakeParty'; // 👈 IMPORTAÇÃO NOVA
+import { MakeParty } from './components/MakeParty'; 
 import { Toaster } from './components/ui/sonner';
+
+// 🚀 NOVO: IMPORTAR O COMPONENTE DE PÁGINA DE DETALHES
+import { ProductDetailPage } from './components/ProductDetailPage'; 
 
 import './index.css';
 
@@ -22,6 +25,7 @@ export default function App() {
           <Header />
           <main>
             <Routes>
+              {/* Rota Home */}
               <Route
                 path="/"
                 element={
@@ -36,17 +40,25 @@ export default function App() {
                 }
               />
 
+              {/* Rota Catálogo Completo */}
               <Route
                 path="/produtos"
                 element={<AllProducts />}
               />
 
-              {/* 🚀 NOVA ROTA AQUI */}
+              {/* Rota Assistente de Festa */}
               <Route
                 path="/montar-festa"
                 element={<MakeParty />}
               />
+              
+              {/* 🚀 NOVA ROTA DINÂMICA DE DETALHES */}
+              <Route
+                path="/produto/:id" // <-- Esta rota pega o ID do produto
+                element={<ProductDetailPage />}
+              />
 
+              {/* Rota de Teste (mantida) */}
               <Route
                 path="/teste"
                 element={<AllProducts />}

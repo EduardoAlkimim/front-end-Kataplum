@@ -12,7 +12,7 @@ const DEFAULT_SLIDES = [
     subtitle: 'Transform your celebration with our premium party equipment.',
     image: 'https://images.unsplash.com/photo-1530103862676-de3c9da59af7?auto=format&fit=crop&q=80&w=1920',
     cta: 'Explore Themes',
-    link: '/front-end-Kataplum/produtos'
+    link: '/produtos' // Corrigido para a rota interna
   },
   {
     id: 2,
@@ -20,16 +20,17 @@ const DEFAULT_SLIDES = [
     subtitle: 'Bring the magic of Disney to your party.',
     image: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=1920',
     cta: 'View Collection',
-    link: '/front-end-Kataplum/produtos'
+    link: '/produtos' // Corrigido para a rota interna
   }
 ];
 
+// 1. 🚀 INTERFACE CORRIGIDA: Usa 'galeria' no lugar de 'imagem_url'
 interface ProductAPI {
   id: number;
   nome: string;
   descricao?: string;
-  preco: number;
-  imagem_url: string;
+  // preco: number; // Não usado no map, mas mantido se for útil.
+  galeria: string[] | string; // Campo novo
 }
 
 interface Slide {
@@ -49,8 +50,30 @@ export function HeroCarousel() {
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
-
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+  // --- Função auxiliar de parsing (Do seu controller) ---
+  const processGalleryFrontend = (galleryData: string[] | string | undefined): string[] => {
+    if (!galleryData) return [];
+    
+    if (typeof galleryData === 'string') {
+        try {
+            // Tenta parsear a string JSON vinda do backend (ex: '["url1", "url2"]')
+            const parsed = JSON.parse(galleryData);
+            if (Array.isArray(parsed)) {
+                return parsed;
+            }
+        } catch (e) {
+            // Se falhar (é uma URL antiga simples), retorna como array de 1 item
+            return [galleryData];
+        }
+    }
+    if (Array.isArray(galleryData)) {
+        return galleryData;
+    }
+    return [];
+  };
+
 
   // --- Busca API ---
   useEffect(() => {
@@ -58,7 +81,7 @@ export function HeroCarousel() {
       try {
         console.log("🔄 Buscando banner (Top 5)...");
         
-        // 1. ALTERAÇÃO AQUI: Pedindo 5 itens na URL
+        // Mantido: Pedindo 5 itens na URL
         const res = await axios.get(`${apiUrl}/produtos?limite=5&pagina=1`);
         const dados = res.data;
 
@@ -67,34 +90,35 @@ export function HeroCarousel() {
         // Detector de Lista (Lógica Sherlock Holmes mantida)
         if (Array.isArray(dados)) {
           listaEncontrada = dados;
-        } else if (typeof dados === 'object' && dados !== null) {
-          if (Array.isArray(dados.itens)) listaEncontrada = dados.itens;
-          else if (Array.isArray(dados.items)) listaEncontrada = dados.items;
-          else if (Array.isArray(dados.data)) listaEncontrada = dados.data;
-          else if (Array.isArray(dados.products)) listaEncontrada = dados.products;
-          else if (Array.isArray(dados.content)) listaEncontrada = dados.content;
-          else {
-            const chaves = Object.keys(dados);
-            for (const chave of chaves) {
-              if (Array.isArray(dados[chave])) {
-                listaEncontrada = dados[chave];
-                break;
-              }
+        } else if (typeof dados === 'object' && dados !== null && 'produtos' in dados && Array.isArray(dados.produtos)) {
+            listaEncontrada = dados.produtos;
+        } else {
+            // Lógica mais segura para o ambiente Kataplum (assumindo que retorna {produtos: [...]})
+            const keys = Object.keys(dados);
+            for (const key of keys) {
+                if (Array.isArray(dados[key])) {
+                    listaEncontrada = dados[key];
+                    break;
+                }
             }
-          }
         }
 
         if (listaEncontrada.length === 0) return;
 
-        // 2. ALTERAÇÃO AQUI: .slice(0, 5) garante o limite no frontend também
-        const novosSlides: Slide[] = listaEncontrada.slice(0, 5).map((p) => ({
-          id: p.id,
-          title: p.nome,
-          subtitle: p.descricao || `Oferta especial: ${p.nome}`,
-          image: (p.imagem_url && p.imagem_url.length > 10) ? p.imagem_url : DEFAULT_SLIDES[0].image,
-          cta: 'Ver Agora',
-          link: '/front-end-Kataplum/produtos'
-        }));
+        // 2. 🚀 MAPEAMENTO CORRIGIDO: Puxa a primeira imagem da GALERIA
+        const novosSlides: Slide[] = listaEncontrada.slice(0, 5).map((p) => {
+            const galeriaUrls = processGalleryFrontend(p.galeria);
+            const mainImage = (galeriaUrls.length > 0 && galeriaUrls[0].length > 10) ? galeriaUrls[0] : DEFAULT_SLIDES[0].image;
+
+            return {
+                id: p.id,
+                title: p.nome,
+                subtitle: p.descricao || `Oferta especial: ${p.nome}`,
+                image: mainImage, // 👈 USANDO GALERIA[0]
+                cta: 'Ver Detalhes',
+                link: `/produto/${p.id}` // 👈 LINK DINÂMICO para a página de detalhes
+            };
+        });
 
         setSlides(novosSlides);
 
@@ -104,9 +128,9 @@ export function HeroCarousel() {
     };
 
     fetchSlides();
-  }, []);
+  }, [apiUrl]); // Mantida dependência apiUrl
 
-  // --- Timer Logic ---
+  // --- Timer Logic (Mantida) ---
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
@@ -164,6 +188,7 @@ export function HeroCarousel() {
               alt={slide.title}
               className="w-full h-full object-cover"
               onError={(e) => {
+                // 💡 Fallback mais robusto caso a URL do Cloudinary falhe
                 e.currentTarget.src = DEFAULT_SLIDES[0].image;
                 e.currentTarget.onerror = null; 
               }}
@@ -181,9 +206,7 @@ export function HeroCarousel() {
                     {slide.subtitle}
                   </p>
                   
-                  {/* 3. ALTERAÇÃO AQUI: BOTÃO COM COR ESTÁTICA #F59E0B 
-                      Usei 'bg-[#F59E0B]' para a cor exata e removi os gradients.
-                  */}
+                  {/* Botão CTA com Link corrigido */}
                   <Button
                     size="lg"
                     className="
@@ -193,7 +216,8 @@ export function HeroCarousel() {
                     "
                     asChild
                   >
-                    <Link to={slide.link}>{slide.cta}</Link>
+                    {/* 🚀 LINK AGORA APONTA PARA A ROTA DINÂMICA /produto/:id */}
+                    <Link to={slide.link}>{slide.cta}</Link> 
                   </Button>
 
                 </div>
@@ -203,7 +227,7 @@ export function HeroCarousel() {
         ))}
       </div>
 
-      {/* Controles de Navegação */}
+      {/* Controles e Indicadores (Mantidos) */}
       <button
         onClick={prevSlide}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all text-white opacity-0 group-hover:opacity-100"

@@ -42,27 +42,28 @@ export function AboutSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* 👇 CORREÇÃO DE ALINHAMENTO: Adicionado 'lg:items-center' 👇 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:items-center">
-          
+
           {/* --- LADO ESQUERDO: TEXTO E STATS --- */}
           <div>
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-sm font-medium mb-6">
               Sobre Nós
             </div>
-            
+
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
               Kataplum: Criando <span className="text-orange-500">Celebrações Inesquecíveis</span>
             </h2>
-            
+
             <div className="space-y-6 text-lg text-gray-500 leading-relaxed">
               <p>
-                Na Kataplum, acreditamos que toda festa merece ser extraordinária. 
-                Desde 2017, ajudamos famílias e empresas a transformar sonhos em realidade 
-                com nossos equipamentos premium e decorações temáticas exclusivas.
+                Nascemos no coração de Brasília, mas nossa paixão por celebrar não tem fronteiras!
+                Desde 2017  é aqui o cenário de momentos que entram para a história. Acreditamos que celebrar é uma arte: seja o "sim" no altar ou o "parabéns" cheio de vida, nossa missão é transformar datas no calendário em memórias inesquecíveis.
+                Há mais de 8 anos, somos conhecidos como "arquitetos de felicidade". Por quê? Porque para nós, o sucesso de um evento não se mede em horas, mas na intensidade dos sorrisos e nos abraços apertados.
               </p>
               <p>
-                Nosso diferencial é tirar o estresse do seu ombro. Cuidamos de toda a logística, 
-                entrega e montagem, para que sua única preocupação seja aproveitar o momento 
-                com quem você ama.
+                Somos apaixonados por gente e por histórias. Não importa se você vem de perto ou de longe, nossa equipe está pronta para criar a atmosfera perfeita para o seu momento. Do planejamento à execução, vivemos e respiramos essa energia.
+                Mais do que uma casa de festas, somos um lugar de encontros.
+                Bem-vindo à Kataplum. Vamos celebrar o
+                extraordinário!
               </p>
             </div>
 
@@ -92,12 +93,12 @@ export function AboutSection() {
             {/* Elementos Decorativos */}
             <div className="absolute -top-10 -right-10 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30" />
             <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30" />
-            
+
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-              <img 
-                src="https://res.cloudinary.com/dsry3r1jc/image/upload/v1763390062/kataplum__502576047_18329564113201149_7632379807681038713_n_1_gmjw8o.jpg" 
+              <img
+                src="https://res.cloudinary.com/dsry3r1jc/image/upload/v1763554843/WhatsApp_Image_2025-11-19_at_09.19.42_ggmp1h.jpg"
                 onError={(e) => e.currentTarget.src = 'https://placehold.co/600x800/f97316/white?text=Kataplum'}
-                alt="Crianças se divertindo em uma festa Kataplum com piscina de bolinhas" 
+                alt="Crianças se divertindo em uma festa Kataplum com piscina de bolinhas"
                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
               />
             </div>
