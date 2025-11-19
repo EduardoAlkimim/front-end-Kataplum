@@ -1,6 +1,6 @@
 // src/components/ProductDetailPage.tsx
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
@@ -18,7 +18,7 @@ interface ProductDetail {
 }
 
 export function ProductDetailPage() {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams();
     const [item, setItem] = useState<ProductDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [mainImage, setMainImage] = useState<string>('');
@@ -39,6 +39,7 @@ export function ProductDetailPage() {
                     if (typeof data.galeria === 'string') {
                         try {
                             galeriaArray = JSON.parse(data.galeria);
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         } catch (e) {
                             galeriaArray = [data.galeria];
                         }
