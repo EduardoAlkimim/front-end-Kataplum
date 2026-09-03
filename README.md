@@ -1,4 +1,4 @@
-# front-end-Kataplum
+﻿# front-end-Kataplum
 
 Front-end da Kataplum, uma plataforma de aluguel. Desenvolvido em equipe (fork de [Augusto-Cezar/front-end-Kataplum](https://github.com/Augusto-Cezar/front-end-Kataplum)).
 
@@ -12,10 +12,10 @@ Front-end da Kataplum, uma plataforma de aluguel. Desenvolvido em equipe (fork d
 ## Como rodar localmente
 
 ```bash
-git clone https://github.com/EduardoAlkimim/front-end-Kataplum.git
+git clone https://github.com/EduardoAlkimim/front-end-kataplum.git
 cd front-end-Kataplum
 npm install
 npm run dev
 ```
 
-Configure as variáveis de ambiente necessárias em um `.env` local (não versionado).
+Configure as variÃ¡veis de ambiente necessÃ¡rias em um `.env` local (nÃ£o versionado).
