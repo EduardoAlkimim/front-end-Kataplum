@@ -1,28 +1,21 @@
-# Kataplum - Festas e Eventos
+# front-end-Kataplum
 
-## 🚀 Especificações Técnicas
+Front-end da Kataplum, uma plataforma de aluguel. Desenvolvido em equipe (fork de [Augusto-Cezar/front-end-Kataplum](https://github.com/Augusto-Cezar/front-end-Kataplum)).
 
-- **React 18** with TypeScript
-- **Vite** for fast development and building
-- **Tailwind CSS v4** for styling
-- **Lucide React** for icons
-- **ShadCN UI** components
+## Stack
 
-## 📁 Estrutura do Projeto
+- React 19, TypeScript
+- Tailwind CSS + Radix UI
+- React Router
+- Vite
 
+## Como rodar localmente
+
+```bash
+git clone https://github.com/EduardoAlkimim/front-end-Kataplum.git
+cd front-end-Kataplum
+npm install
+npm run dev
 ```
-├── App.tsx                      # Main application component
-├── components/
-│   ├── Header.tsx              # Navigation header with mobile menu
-│   ├── HeroCarousel.tsx        # Auto-sliding carousel (3s interval)
-│   ├── FeaturedCategories.tsx  # Themed category cards
-│   ├── HowItWorks.tsx          # 3-step process section
-│   ├── ProductList.tsx         # Filterable product showcase
-│   ├── InstagramFeed.tsx       # Instagram feed with caching
-│   ├── Footer.tsx              # Footer with contact info
-│   └── ui/                     # ShadCN UI components
-├── styles/
-│   └── globals.css             # Global styles and brand colors
-└── public/
-    └── assets/
-        └── carousel/           # Carousel images (to be replaced)
+
+Configure as variáveis de ambiente necessárias em um `.env` local (não versionado).
